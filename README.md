@@ -1,147 +1,140 @@
-# Gender Identification Through Audio Analysis - Project Documentation
+# Gender Identification Through Audio Analysis
 
-## SETUP AND EXECUTION
+A simple program that listens to voice recordings and guesses whether the speaker is male or female.
 
-### Virtual Environment Setup
+## What You Need
 
-1. Create a virtual environment:
-   ```bash
-   python -m venv venv
-   ```
+- Python installed on your computer
+- At least 10 audio files (5 male voices, 5 female voices)
+- Each audio file should be at least 10 seconds long with someone actually talking
+- Supported formats: WAV, MP3, FLAC, M4A, OGG
 
-2. Activate the virtual environment:
-   
-   **On Windows:**
-   ```bash
-   venv\Scripts\activate
-   ```
-   
-   **On macOS/Linux:**
-   ```bash
-   source venv/bin/activate
-   ```
+## Quick Start
 
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 1. Set Up Virtual Environment (Recommended)
 
-4. Ensure you have audio files ready:
-   - Minimum 10 audio recordings (at least 5 male, 5 female) for training
-   - Each audio sample must be at least 10 seconds long
-   - Supported formats: WAV, MP3, FLAC, etc. (librosa supports many formats)
+A virtual environment keeps your project's packages separate from other projects. It's like having a separate toolbox for this project.
 
-### Execution
-
-Run the main script:
+**Windows:**
 ```bash
-python "src/Code Logic/main.py"
+python -m venv venv
+venv\Scripts\activate
 ```
 
-The script will:
-- Look for training data in: `audio_samples/training/` (optional, for analysis)
-- Look for test data in: `audio_samples/test/`
-- Analyze training data if available
-- Test on test samples using custom rule-based classifier
-- Save results to `results/` directory
-
-Organize your audio files:
-```
-audio_samples/
-├── training/
-│   ├── male/     (place male voice samples here)
-│   └── female/   (place female voice samples here)
-└── test/         (place test samples here)
-```
-
-### Running Tests
-
-Run all test cases:
+**Mac/Linux:**
 ```bash
-python "src/Test Cases/run_all_tests.py"
+python -m venv venv
+source venv/bin/activate
 ```
 
-Run specific test class:
+You'll know it worked when you see `(venv)` at the start of your command line.
+
+### 2. Install Required Packages
+
 ```bash
-python -m unittest "src.Test Cases.test_comparison.TestVoiceSampleComparison" -v
+pip install -r requirements.txt
 ```
 
-## ROLE OF EACH FILE
+### 3. Put Your Audio Files in the Right Place
 
-### src/Code Logic/extract_voice_metadata.py
-- `VoiceFeatureExtractor` class
-- Extracts acoustic features from audio files
-- Splits audio into 1-second segments
-- Extracts mean pitch and pitch standard deviation per segment
-- Handles audio loading and fundamental frequency extraction using librosa
+Create this folder structure:
 
-### src/Code Logic/classification.py
-- `CustomRuleBasedClassifier` class: Implements custom rule-based gender classification
-  * Computes weighted scores for each segment (mean pitch weight: 0.7, pitch std dev weight: 0.3)
-  * Classifies each segment as male or female based on pitch threshold (165 Hz)
-  * Uses majority voting across segments for final gender prediction
-- `GenderClassifier` class: Wrapper interface for the custom classifier
+```
+Voice_Samples/
+├── Male_Voices/     (put male voice files here)
+└── Female_Voices/   (put female voice files here)
+```
 
-### src/Code Logic/main.py
-- `GenderIdentificationSystem` class: Main orchestrator
-  * Coordinates feature extraction and classification
-  * Handles training data analysis (optional)
-  * Processes test samples and generates results
-  * Saves results to JSON and CSV formats
-- Helper functions:
-  * `find_audio_files()`: Finds audio files in directories
-  * `load_training_data()`: Loads training data from directory structure
-  * `load_test_data()`: Loads test data from directory structure
-  * `main()`: Entry point that runs the complete workflow
+### 4. Run the Program
 
-### src/Test Cases/
-- `test_feature_extraction.py`: Tests for `VoiceFeatureExtractor` class
-- `test_classification.py`: Tests for `CustomRuleBasedClassifier` and `GenderClassifier` classes
-- `test_system.py`: Tests for `GenderIdentificationSystem` class
-- `test_helpers.py`: Tests for helper functions
-- `test_comparison.py`: Voice sample comparison test with hardcoded expected results
-- `run_all_tests.py`: Test runner to execute all tests
+```bash
+python "src/Code_Logic/main.py"
+```
 
-### requirements.txt
-- Lists Python package dependencies:
-  * numpy: Numerical computations
-  * librosa: Audio analysis and feature extraction
-  * soundfile: Audio file I/O
+That's it! The program will:
+- Analyze your audio files
+- Guess if each voice is male or female
+- Save the results to `src/logging/results.csv`
 
-### README.md
-- Project documentation (this file)
+## How It Works (Simple Version)
 
-## FINDINGS
+The program looks at how high or low someone's voice is (called "pitch"). 
 
-### Classification Method
-The system uses a custom rule-based classifier that:
-- Splits audio into 1-second segments for granular analysis
-- Extracts mean pitch and pitch standard deviation from each segment
-- Computes weighted scores (70% mean pitch, 30% pitch std dev)
-- Classifies segments using a pitch threshold of 165 Hz
-- Determines final gender through majority voting across all segments
+- **Male voices** are usually lower (like a bass guitar)
+- **Female voices** are usually higher (like a violin)
 
-### Key Parameters
-- Pitch Threshold: 165 Hz (configurable)
-- Mean Pitch Weight: 0.7 (70%)
-- Pitch Std Dev Weight: 0.3 (30%)
-- Segment Duration: 1 second
+The program:
+1. Splits each audio file into 1-second chunks
+2. Measures the pitch of each chunk
+3. Votes on whether each chunk sounds male or female
+4. The majority vote wins
 
-### Advantages
-- Robust to temporary pitch variations within audio samples
-- Handles audio with mixed characteristics throughout the recording
-- Provides segment-level insights for analysis
-- No training data required (rule-based approach)
-- Majority voting makes the classifier resilient to outliers
+## What Each File Does
 
-### Limitations
-- Requires minimum 10 seconds of audio per sample
-- Performance depends on audio quality and clear speech
-- Threshold-based approach may need tuning for specific populations
-- Does not account for other acoustic features beyond pitch
+Each file has a specific job:
 
-### Test Results
-- Test suite covers all code lines with comprehensive test cases
-- Comparison test validates results against expected outcomes
-- All core functionality tested including edge cases and error handling
+### The Main Files (Code_Logic folder)
 
+**`main.py`** - The boss file that runs everything
+- This is the file you run to start the program
+- It tells all the other files what to do and when
+- It loads your audio files, runs the analysis, and saves the results
+
+**`extract_voice_metadata.py`** - The listener
+- Takes your audio files and "listens" to them
+- Figures out how high or low the voice is (the pitch)
+- Splits long recordings into 1-second chunks to analyze each part separately
+
+**`classification.py`** - The decision maker
+- Takes the pitch information from the listener
+- Looks at each 1-second chunk and votes: "This sounds male" or "This sounds female"
+- Counts all the votes and makes the final decision (majority wins!)
+
+**`config.py`** - The settings file
+- Stores all the important numbers (like the pitch threshold of 170 Hz)
+- If you want to change how the program works, you edit this file
+- Think of it like the control panel
+
+**`path_helpers.py`** and **`audio_helpers.py`** - The helpers
+- These find your audio files and make sure everything is in the right place
+- They're like assistants that help the main files do their job
+
+### The Data Files (Data_Logic folder)
+
+**`feature_analyzer.py`** - The statistician
+- Looks at all the voice features and calculates averages
+- Shows you the differences between male and female voices
+- Creates the detailed statistics you see in the results
+
+**`data_collection_logger.py`** - The record keeper
+- Keeps track of which audio files you used
+- Remembers where each file came from
+- Helps you organize your data
+
+**`utils.py`** - The file saver
+- Takes all the results and saves them to CSV files
+- Makes sure your results are saved in a format you can open in Excel
+
+### How They Work Together
+
+1. **main.py** starts everything and loads your audio files
+2. **extract_voice_metadata.py** listens to each file and gets the pitch
+3. **classification.py** looks at the pitch and decides male or female
+4. **feature_analyzer.py** calculates statistics about all the voices
+5. **utils.py** saves everything to CSV files
+
+## Results
+
+All results are saved in the `src/logging/` folder:
+- `results.csv` - Shows predictions for each audio file (was it right or wrong?)
+- `feature_analysis_results.csv` - Shows detailed statistics about the voices (average pitch, etc.)
+
+## Project Structure
+
+```
+src/
+├── Code_Logic/          (Main program files)
+│   └── main.py         (Run this file!)
+├── Test_Cases/         (Tests to make sure everything works)
+└── logging/            (Results saved here)
+```

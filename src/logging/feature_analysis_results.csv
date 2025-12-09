@@ -1,0 +1,19 @@
+audio_path,true_label,average_frequency,peak_frequency,frequency_std
+C:\Users\mdali\OneDrive\Desktop\CS435_Final_Project\Voice_Samples\Male_Voices\Male1.mp3,male,131.3275080467713,205.2672581380976,29.129891452790357
+C:\Users\mdali\OneDrive\Desktop\CS435_Final_Project\Voice_Samples\Male_Voices\Male2.mp3,male,177.03997080947696,337.3322358273121,46.2470512823593
+C:\Users\mdali\OneDrive\Desktop\CS435_Final_Project\Voice_Samples\Male_Voices\Male3.mp3,male,197.7189382377983,339.28638158974695,48.07615880129115
+C:\Users\mdali\OneDrive\Desktop\CS435_Final_Project\Voice_Samples\Male_Voices\Male4.mp3,male,184.52880150155244,415.30469757994507,91.23655882936939
+C:\Users\mdali\OneDrive\Desktop\CS435_Final_Project\Voice_Samples\Male_Voices\Male5.mp3,male,143.41113892356654,359.461399713042,30.355512990328034
+C:\Users\mdali\OneDrive\Desktop\CS435_Final_Project\Voice_Samples\Female_Voices\Female1.mp3,female,200.1899609597319,323.96475278211557,42.32925515851424
+C:\Users\mdali\OneDrive\Desktop\CS435_Final_Project\Voice_Samples\Female_Voices\Female2.mp3,female,262.7615604397915,479.82340237271336,83.0314792085609
+C:\Users\mdali\OneDrive\Desktop\CS435_Final_Project\Voice_Samples\Female_Voices\Female3.mp3,female,272.588154322804,316.5653876023804,42.060028063033975
+C:\Users\mdali\OneDrive\Desktop\CS435_Final_Project\Voice_Samples\Female_Voices\Female4.mp3,female,250.63315222078998,508.35518662380014,77.31104237665076
+C:\Users\mdali\OneDrive\Desktop\CS435_Final_Project\Voice_Samples\Female_Voices\Female5.mp3,female,193.70182562462207,505.42727619869544,97.03488741711183
+,,,,
+STATISTICS,,0,0,0
+MALE - Average Frequency,"Mean: 166.81, Std: 25.22, Range: 131.33-197.72",166.8052715038331,0,0
+MALE - Peak Frequency,"Mean: 331.33, Std: 69.04, Range: 205.27-415.30",0,331.33039456962877,0
+MALE - Frequency Std Dev,"Mean: 49.01, Std: 22.52, Range: 29.13-91.24",0,0,49.009034671227646
+FEMALE - Average Frequency,"Mean: 235.97, Std: 32.68, Range: 193.70-272.59",235.97493071354785,0,0
+FEMALE - Peak Frequency,"Mean: 426.83, Std: 87.60, Range: 316.57-508.36",0,426.82720111594097,0
+FEMALE - Frequency Std Dev,"Mean: 68.35, Std: 22.30, Range: 42.06-97.03",0,0,68.35333844477434
