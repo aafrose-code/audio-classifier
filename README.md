@@ -13,8 +13,6 @@ A simple program that listens to voice recordings and guesses whether the speake
 
 ### 1. Set Up Virtual Environment (Recommended)
 
-A virtual environment keeps your project's packages separate from other projects. It's like having a separate toolbox for this project.
-
 **Windows:**
 ```bash
 python -m venv venv
@@ -58,10 +56,10 @@ That's it! The program will:
 
 ## How It Works (Simple Version)
 
-The program looks at how high or low someone's voice is (called "pitch"). 
+The program looks at how high or low someone's voice is (called pitch). 
 
-- **Male voices** are usually lower (like a bass guitar)
-- **Female voices** are usually higher (like a violin)
+- **Male voices** are usually lower
+- **Female voices** are usually higher
 
 The program:
 1. Splits each audio file into 1-second chunks
@@ -88,16 +86,15 @@ Each file has a specific job:
 **`classification.py`** - The decision maker
 - Takes the pitch information from the listener
 - Looks at each 1-second chunk and votes: "This sounds male" or "This sounds female"
-- Counts all the votes and makes the final decision (majority wins!)
+- Counts all the votes and makes the final decision (majority wins)
 
 **`config.py`** - The settings file
 - Stores all the important numbers (like the pitch threshold of 170 Hz)
 - If you want to change how the program works, you edit this file
-- Think of it like the control panel
+
 
 **`path_helpers.py`** and **`audio_helpers.py`** - The helpers
 - These find your audio files and make sure everything is in the right place
-- They're like assistants that help the main files do their job
 
 ### The Data Files (Data_Logic folder)
 
@@ -134,7 +131,7 @@ All results are saved in the `src/logging/` folder:
 ```
 src/
 ├── Code_Logic/          (Main program files)
-│   └── main.py         (Run this file!)
+│   └── main.py         (Run this file)
 ├── Test_Cases/         (Tests to make sure everything works)
 └── logging/            (Results saved here)
 ```
